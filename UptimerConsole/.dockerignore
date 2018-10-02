@@ -1,0 +1,4 @@
+#To make your build context as small as possible
+
+bin\
+obj\
