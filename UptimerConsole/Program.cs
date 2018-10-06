@@ -13,6 +13,10 @@ using Microsoft.WindowsAzure.Storage.Blob;
 
 class UptimerConsole
 {
+    private static string _Url;
+    private static string _Frequency;
+    private static APIClient _APIClient;
+    
     static void Main(string[] args)
     {
         //initialise parameters with defaults
