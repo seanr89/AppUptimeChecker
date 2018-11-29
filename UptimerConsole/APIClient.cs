@@ -16,6 +16,7 @@ public class APIClient
     private string _URL;
     private bool _IsActive;
     private int _URLID;
+    private static HttpClient _HttpClient;
 
     /// <summary>
     /// Constructor
@@ -29,6 +30,11 @@ public class APIClient
         //Initialise these two parameters by default
         _URLID = 0;
         _IsActive = true;
+        _HttpClient = new HttpClient();
+        _HttpClient.Timeout = TimeSpan.FromSeconds(5.0);
+        _HttpClient.DefaultRequestHeaders.Accept.Clear();
+        _HttpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
         TestClient();
     }
 
@@ -52,11 +58,6 @@ public class APIClient
                     Console.WriteLine("TestClient", "API Client is Active");
                     _IsActive = true;
                 }
-                // else
-                // {
-                //     Console.WriteLine("TestClient", "API Client is Not Active");
-                //     //_IsActive = false;
-                // }
             }
         }
         catch(HttpRequestException hre)
@@ -83,8 +84,8 @@ public class APIClient
                 return;
             }
             //implement the using statement to ensure the client is closed
-            using(HttpClient client = new HttpClient())
-            {
+            // using(HttpClient client = new HttpClient())
+            // {
                 AppendURLIDTOLogResponse(response, _URLID);
                 string jsonResponse = JsonConvert.SerializeObject(response);
                 HttpContent _Body = new StringContent(jsonResponse);
@@ -92,16 +93,16 @@ public class APIClient
                 // and add the header to this object instance
                 // optional: add a formatter option to it as well
                 _Body.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
-
-                client.Timeout = TimeSpan.FromSeconds(5.0);
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var APIResponse = await client.PostAsync(_APIURL+"/api/Uptime/Post", _Body);
+                var APIResponse = await _HttpClient.PostAsync(_APIURL+"/api/Uptime/Post", _Body);
                 if(APIResponse != null)
                 {
                     Console.WriteLine($"Handling API Response with status: {APIResponse.StatusCode}");
                 }
-            }
+                else{
+                    Console.WriteLine($"API Respone was null");
+                }
+                //Console.WriteLine($"done");
+            //}
         }
         catch(HttpRequestException hre)
         {
@@ -109,7 +110,7 @@ public class APIClient
         }
         catch(Exception e)
         {
-            Console.WriteLine($"Exception Caught {e.Message}");
+            Console.WriteLine($"SaveResponse: Exception Caught {e.Message}");
         }
         
     }

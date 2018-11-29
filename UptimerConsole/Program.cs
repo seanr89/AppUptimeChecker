@@ -16,16 +16,17 @@ class UptimerConsole
     private static string _Url;
     private static string _Frequency;
     private static APIClient _APIClient;
+    private static Timer _Timer;
     
     static void Main(string[] args)
     {
         //initialise parameters with defaults
-        _Url = "https://www.google.com";
+        _Url = "https://www.bbc.co.uk/";
         _Frequency = "15000";
 
         if(args.Any())
         {
-            _Url = args[0] ?? "https://www.google.com";
+            _Url = args[0] ?? "https://www.bbc.co.uk/";
             _Frequency = args[1] ?? "15000";
         }
 
@@ -34,11 +35,13 @@ class UptimerConsole
         //_APIClient = new APIClient("http://localhost:5000", _Url);
         _APIClient.InitialiseURLToAPI();
 
-        //Console.WriteLine("Starting URL Pinging");
+        Console.WriteLine("Starting URL Pinging");
         
         //Start a timer to ping the application URL
-        var timer = new Timer(async (s)=> await PingUrl(s), null, 3000, Convert.ToInt32(_Frequency));
+        _Timer = new Timer(async (s)=> await PingUrl(s), null, 3000, Convert.ToInt32(_Frequency));
+        Console.WriteLine($"Timer Started!");
         Console.ReadLine();
+        Console.WriteLine($"Application Over!!");
     }
 
     /// <summary>
