@@ -1,5 +1,12 @@
 # Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+A console application that can be used to record web application uptime response messages to a database if available
+Application will be used primarily for web based applications on azure, consuming a custom built web api to store the data.
+
+1. Simple C# netcore console application
+    - Test version available: UptimerConsole
+2. Currently a netcore web api for data storage
+    - Test version maintained on azure devops to be re-acquired to here!
+3. A SPA web app for monitoring the data!!
 
 # Getting Started
 TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
