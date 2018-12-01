@@ -7,6 +7,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using UptimeAPI.Models.Settings;
+using UptimeAPI.Business;
+using UptimeAPI.DataLayer;
+using UptimeAPI.DataLayer.Interfaces;
 
 namespace UptimeAPI
 {
@@ -28,7 +32,7 @@ namespace UptimeAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<DataConnectionSettings>(Configuration.GetSection("ConnectionSettings"));
-            
+
             services.AddScoped<UptimeManager>();
             services.AddScoped<IUptimeDataStore, UptimeDataStore>();
             services.AddScoped<ISiteDataStore, SiteDataStore>();
