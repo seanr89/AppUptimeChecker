@@ -76,16 +76,13 @@ public class APIClient
     /// <param name="response">The log response object to be sent</param>
     public async Task SaveResponse(LogResponse response)
     {
-        Console.WriteLine($"SaveResponse at {response.EventDate.ToLongTimeString()}");
+        //Console.WriteLine($"SaveResponse at {response.EventDate.ToLongTimeString()}");
         try
         {
             if(_IsActive == false)
             {
                 return;
             }
-            //implement the using statement to ensure the client is closed
-            // using(HttpClient client = new HttpClient())
-            // {
                 AppendURLIDTOLogResponse(response, _URLID);
                 string jsonResponse = JsonConvert.SerializeObject(response);
                 HttpContent _Body = new StringContent(jsonResponse);
@@ -94,15 +91,14 @@ public class APIClient
                 // optional: add a formatter option to it as well
                 _Body.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                 var APIResponse = await _HttpClient.PostAsync(_APIURL+"/api/Uptime/Post", _Body);
-                if(APIResponse != null)
-                {
-                    Console.WriteLine($"Handling API Response with status: {APIResponse.StatusCode}");
-                }
-                else{
-                    Console.WriteLine($"API Respone was null");
-                }
+                // if(APIResponse != null)
+                // {
+                //     Console.WriteLine($"Handling API Response with status: {APIResponse.StatusCode}");
+                // }
+                // else{
+                //     Console.WriteLine($"API Respone was null");
+                // }
                 //Console.WriteLine($"done");
-            //}
         }
         catch(HttpRequestException hre)
         {
@@ -129,7 +125,6 @@ public class APIClient
                 //implement the using statement to ensure the client is closed
                 using(HttpClient client = new HttpClient())
                 {
-                    //Console.WriteLine($"Url is {_APIURL}/api/URL/ReadIDForURL/");
                     client.Timeout = TimeSpan.FromSeconds(5.0);
                     client.DefaultRequestHeaders.Accept.Clear();
                     // Construct an HttpContent from a StringContent

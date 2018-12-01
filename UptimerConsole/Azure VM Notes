@@ -1,0 +1,27 @@
+az group deployment create --resource-group DockerDev \
+    --template-uri https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/docker-simple-on-ubuntu/azuredeploy.json
+
+
+-- UserName : dockerAdmin
+-- Password : 5R7onnie
+-- DNS : Dockervm
+
+
+Accessing VM
+
+az login
+- Login into azure through the cli
+
+Show vm details
+az vm show \
+    --resource-group DockerDev \
+    --name myDockerVM \
+    --show-details \
+    --query [fqdns] \
+    --output tsv
+
+remote into system:
+ssh dockerAdmin@dockervm.ukwest.cloudapp.azure.com
+
+run app with default parameters
+docker run -i -d seanraff89/uptimerconsole

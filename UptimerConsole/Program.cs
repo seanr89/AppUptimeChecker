@@ -39,9 +39,8 @@ class UptimerConsole
         
         //Start a timer to ping the application URL
         _Timer = new Timer(async (s)=> await PingUrl(s), null, 3000, Convert.ToInt32(_Frequency));
-        Console.WriteLine($"Timer Started!");
         Console.ReadLine();
-        Console.WriteLine($"Application Over!!");
+        Console.WriteLine($"Application Complete!");
     }
 
     /// <summary>
@@ -52,7 +51,7 @@ class UptimerConsole
     /// <returns></returns>
     private static async Task PingUrl(object state)
     {
-        Console.WriteLine($"PingUrl with current time {DateTime.Now.ToLongTimeString()}");
+        //Console.WriteLine($"PingUrl with current time {DateTime.Now.ToLongTimeString()}");
         var stopwatch = Stopwatch.StartNew();
         var response = await GetResponse();
         if (response != null)
