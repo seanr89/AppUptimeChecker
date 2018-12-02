@@ -165,6 +165,7 @@ public class APIClient
     /// <param name="ID"></param>
     private void AppendURLIDTOLogResponse(LogResponse response, int ID)
     {
+        //Console.WriteLine($"URL_ID is {ID}");
         response.URLID = ID;
     }
 }

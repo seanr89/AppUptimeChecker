@@ -38,6 +38,7 @@ class UptimerConsole
 
         Console.WriteLine("Starting URL Pinging");
         _Client = new HttpClient();
+        _Client.Timeout = TimeSpan.FromSeconds(5.0);
         
         //Start a timer to ping the application URL
         _Timer = new Timer(async (s)=> await PingUrl(s), null, 3000, Convert.ToInt32(_Frequency));
@@ -76,8 +77,6 @@ class UptimerConsole
         try
         {
             var request = new HttpRequestMessage(HttpMethod.Get, _Url);
-
-            _Client.Timeout = TimeSpan.FromSeconds(5.0);
             return await _Client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
         }
         catch (Exception ex)
