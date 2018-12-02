@@ -104,10 +104,10 @@ public class APIClient
         {
             Console.WriteLine($"SaveResponse HttpRequestException Caught {hre.Message}");
         }
-        catch(Exception e)
-        {
-            Console.WriteLine($"SaveResponse: Exception Caught {e.Message}");
-        }
+        // catch(Exception e)
+        // {
+        //     Console.WriteLine($"SaveResponse: Exception Caught {e.Message}");
+        // }
         
     }
 
@@ -140,19 +140,11 @@ public class APIClient
                         var contents = await APIResponse.Content.ReadAsStringAsync();
                         ReadURLIDFromResponse(contents);
                     }
-                    // else
-                    // {
-                    //     Console.WriteLine($"No response or unsuccessful for method call: InitialiseURLToAPI with response {APIResponse.StatusCode}");
-                    // }
                 }
             }
             catch(HttpRequestException hre)
             {
                 Console.WriteLine($"InitialiseURLToAPI HttpRequestException Caught {hre.Message}");
-            }
-            catch(Exception e)
-            {
-                Console.WriteLine($"InitialiseURLToAPI: Exception caught {e.Message}");
             }
         }
     }

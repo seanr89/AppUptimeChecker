@@ -17,17 +17,18 @@ class UptimerConsole
     private static string _Frequency;
     private static APIClient _APIClient;
     private static Timer _Timer;
+    private static HttpClient _Client;
     
     static void Main(string[] args)
     {
         //initialise parameters with defaults
         _Url = "https://www.bbc.co.uk/";
-        _Frequency = "15000";
+        _Frequency = "30000";
 
         if(args.Any())
         {
             _Url = args[0] ?? "https://www.bbc.co.uk/";
-            _Frequency = args[1] ?? "15000";
+            _Frequency = args[1] ?? "30000";
         }
 
         //initialise the API Client with API Url included to the AzureAPI
@@ -36,6 +37,7 @@ class UptimerConsole
         _APIClient.InitialiseURLToAPI();
 
         Console.WriteLine("Starting URL Pinging");
+        _Client = new HttpClient();
         
         //Start a timer to ping the application URL
         _Timer = new Timer(async (s)=> await PingUrl(s), null, 3000, Convert.ToInt32(_Frequency));
@@ -52,14 +54,17 @@ class UptimerConsole
     private static async Task PingUrl(object state)
     {
         //Console.WriteLine($"PingUrl with current time {DateTime.Now.ToLongTimeString()}");
-        var stopwatch = Stopwatch.StartNew();
+        var watch = Stopwatch.StartNew();
         var response = await GetResponse();
         if (response != null)
         {
-            LogResponse logResponse = CreateLogResponse(response.StatusCode, (int)stopwatch.ElapsedMilliseconds, response);
+            LogResponse logResponse = CreateLogResponse(response.StatusCode, (int)watch.ElapsedMilliseconds, response);
             await _APIClient.SaveResponse(logResponse);
-            stopwatch.Stop();
+            logResponse = null;
         }
+        response = null;
+        watch.Stop();
+        watch = null;
     }
 
     /// <summary>
@@ -71,15 +76,13 @@ class UptimerConsole
         try
         {
             var request = new HttpRequestMessage(HttpMethod.Get, _Url);
-            using (var client = new HttpClient())
-            {
-                client.Timeout = TimeSpan.FromSeconds(5.0);
-                return await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
-            }
+
+            _Client.Timeout = TimeSpan.FromSeconds(5.0);
+            return await _Client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
         }
         catch (Exception ex)
         {
-            Console.WriteLine("GetResponse:Exception caught: " + ex.StackTrace);
+            Console.WriteLine("GetResponse : Exception caught: " + ex.Message);
             return null;
         }
     }
@@ -91,7 +94,7 @@ class UptimerConsole
     /// <param name="duration"></param>
     /// <param name="message"></param>
     /// <returns>A LogResponse object</returns>
-    private static LogResponse CreateLogResponse(HttpStatusCode responseCode, int duration, HttpResponseMessage message)
+    static LogResponse CreateLogResponse(HttpStatusCode responseCode, int duration, HttpResponseMessage message)
     {
         LogResponse result = new LogResponse();
         //result.URL = _Url;
