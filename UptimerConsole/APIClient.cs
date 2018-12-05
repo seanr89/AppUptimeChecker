@@ -99,16 +99,12 @@ public class APIClient
                 //     Console.WriteLine($"API Respone was null");
                 // }
                 //Console.WriteLine($"done");
+                APIResponse = null;
         }
         catch(HttpRequestException hre)
         {
             Console.WriteLine($"SaveResponse HttpRequestException Caught {hre.Message}");
         }
-        // catch(Exception e)
-        // {
-        //     Console.WriteLine($"SaveResponse: Exception Caught {e.Message}");
-        // }
-        
     }
 
         /// <summary>

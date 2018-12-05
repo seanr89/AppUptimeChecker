@@ -29,8 +29,12 @@ read logs: docker logs <containerID>
 #How to run
 docker run -i -t sixeyed/coreclr-uptimer https://blog.sixeyed.com 5000
 docker run -t -d seanraff89/uptimerconsole //live with -i -t for local test
+#TODO -addition of restart along with memory allocation to be included
 
 # -t stops the container from closing in the background
+
+# stop a container 
+docker rm -f <containerID>
 
 # Contribute
 TODO: Explain how other users and developers can contribute to make your code better. 

@@ -38,10 +38,17 @@ class UptimerConsole
 
         Console.WriteLine("Starting URL Pinging");
         _Client = new HttpClient();
-        _Client.Timeout = TimeSpan.FromSeconds(5.0);
+        _Client.Timeout = TimeSpan.FromSeconds(10.0);
         
-        //Start a timer to ping the application URL
-        _Timer = new Timer(async (s)=> await PingUrl(s), null, 3000, Convert.ToInt32(_Frequency));
+        StartTimer();
+        // try{
+        //     //Start a timer to ping the application URL
+        //     _Timer = new Timer(async (s)=> await PingUrl(s), null, 10000, Convert.ToInt32(_Frequency));
+        // }
+        // catch(System.OutOfMemoryException e)
+        // {
+        //     Console.WriteLine($"Application Timer has had a memory issue : {e.Message}");
+        // }
         Console.ReadLine();
         Console.WriteLine($"Application Complete!");
     }
@@ -83,6 +90,21 @@ class UptimerConsole
         {
             Console.WriteLine("GetResponse : Exception caught: " + ex.Message);
             return null;
+        }
+    }
+
+    private static void StartTimer()
+    {
+        try{
+            //ensure current timer is stopped
+            _Timer = null;
+            //Start a timer to ping the application URL
+            _Timer = new Timer(async (s)=> await PingUrl(s), null, 10000, Convert.ToInt32(_Frequency));
+        }
+        catch(System.OutOfMemoryException e)
+        {
+            Console.WriteLine($"Application Timer has had a memory issue : {e.Message}");
+            StartTimer();
         }
     }
 
