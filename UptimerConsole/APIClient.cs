@@ -98,8 +98,11 @@ public class APIClient
                 // else{
                 //     Console.WriteLine($"API Respone was null");
                 // }
-                //Console.WriteLine($"done");
+                
+                //Null everything!!
                 APIResponse = null;
+                _Body = null;
+                jsonResponse = null;
         }
         catch(HttpRequestException hre)
         {

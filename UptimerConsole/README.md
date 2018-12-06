@@ -30,10 +30,11 @@ read logs: docker logs <containerID>
 docker run -i -t sixeyed/coreclr-uptimer https://blog.sixeyed.com 5000
 docker run -t -d seanraff89/uptimerconsole //live with -i -t for local test
 #test
-docker run -t -d --memory="100m" --restart=always seanraff89/uptimerconsole
+docker run -t -d --restart=always seanraff89/uptimerconsole
 #live
-docker run -i -d --memory="100m" --restart=always seanraff89/uptimerconsole
+docker run -i -d --restart=always seanraff89/uptimerconsole
 #TODO -addition of restart along with memory allocation to be included
+#Memory allocation is not current available 
 
 # -t stops the container from closing in the background
 
