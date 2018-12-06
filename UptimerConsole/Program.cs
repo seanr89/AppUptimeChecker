@@ -17,6 +17,7 @@ class UptimerConsole
     private static string _Frequency;
     private static APIClient _APIClient;
     private static Timer _Timer;
+    static AutoResetEvent _autoEvent = null;
     private static HttpClient _Client;
     
     static void Main(string[] args)
@@ -42,10 +43,11 @@ class UptimerConsole
         
         //StartTimer();
         try{
+            _autoEvent = new AutoResetEvent(false);
             //ensure current timer is stopped
             _Timer = null;
             //Start a timer to ping the application URL
-            _Timer = new Timer(async (s)=> await PingUrl(s), null, 10000, Convert.ToInt32(_Frequency));
+            _Timer = new Timer(async (s)=> await PingUrl(s), _autoEvent, 10000, Convert.ToInt32(_Frequency));
         }
         catch(System.OutOfMemoryException e)
         {
@@ -77,6 +79,8 @@ class UptimerConsole
         response = null;
         watch.Stop();
         watch = null;
+        // Force a garbage collection to occur for this demo.
+        GC.Collect();
     }
 
     /// <summary>
