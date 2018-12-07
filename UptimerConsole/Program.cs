@@ -55,6 +55,12 @@ class UptimerConsole
             Environment.Exit(0);
             AppDomain.CurrentDomain.ProcessExit += (sender, eventArgs) => Console.WriteLine("proc exit");
         }
+        catch(System.Threading.Tasks.TaskCanceledException et)
+        {
+            Console.WriteLine($"Application Timer has cancelled for exception : {e.Message}");
+            Environment.Exit(0);
+            AppDomain.CurrentDomain.ProcessExit += (sender, eventArgs) => Console.WriteLine("proc exit");
+        }
         Console.ReadLine();
         //Console.WriteLine($"Application Complete!");
     }

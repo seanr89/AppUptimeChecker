@@ -31,7 +31,7 @@ public class APIClient
         _URLID = 0;
         _IsActive = true;
         _HttpClient = new HttpClient();
-        _HttpClient.Timeout = TimeSpan.FromSeconds(5.0);
+        _HttpClient.Timeout = TimeSpan.FromSeconds(15.0);
         _HttpClient.DefaultRequestHeaders.Accept.Clear();
         _HttpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
