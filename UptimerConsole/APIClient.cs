@@ -108,6 +108,10 @@ public class APIClient
         {
             Console.WriteLine($"SaveResponse HttpRequestException Caught {hre.Message}");
         }
+        catch(System.Threading.Tasks.TaskCanceledException et)
+        {
+            Console.WriteLine($"SaveResponse exception caught : {et.Message}");
+        }
     }
 
         /// <summary>
