@@ -1,6 +1,12 @@
 #!/bin/bash
 set -e -u #Exit immediately if a command exits with a non-zero status.
 
+if [ $# -eq 0 ]
+  then
+    echo "No arguments supplied";
+    exit 1;
+fi
+
 #
 if [ -z "$1" ]
 then
