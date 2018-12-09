@@ -55,7 +55,7 @@ public class APIClient
 
                 if(response.IsSuccessStatusCode)
                 {
-                    Console.WriteLine("TestClient", "API Client is Active");
+                    //Console.WriteLine("TestClient", "API Client is Active");
                     _IsActive = true;
                 }
             }
@@ -64,10 +64,10 @@ public class APIClient
         {
             Console.WriteLine($"TestClient HttpRequestException Caught {hre.Message}");
         }
-        catch(Exception e)
-        {
-            Console.WriteLine($"Exception Caught {e.Message}");
-        }
+        // catch(Exception e)
+        // {
+        //     Console.WriteLine($"TestClient Exception Caught {e.Message}");
+        // }
     }
 
     /// <summary>
@@ -76,7 +76,7 @@ public class APIClient
     /// <param name="response">The log response object to be sent</param>
     public async Task SaveResponse(LogResponse response)
     {
-        //Console.WriteLine($"SaveResponse at {response.EventDate.ToLongTimeString()}");
+        Console.WriteLine($"SaveResponse at {response.EventDate.ToLongTimeString()}");
         try
         {
             if(_IsActive == false)

@@ -34,10 +34,9 @@ class UptimerConsole
 
         //initialise the API Client with API Url included to the AzureAPI
         _APIClient = new APIClient("https://siteuptimeapi.azurewebsites.net", _Url);
-        //_APIClient = new APIClient("http://localhost:5000", _Url);
         _APIClient.InitialiseURLToAPI();
 
-        Console.WriteLine("Starting URL Pinging");
+        Console.WriteLine("Starting Timer in 10 secs");
         _Client = new HttpClient();
         _Client.Timeout = TimeSpan.FromSeconds(10.0);
         
