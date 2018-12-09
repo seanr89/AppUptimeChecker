@@ -1,0 +1,16 @@
+{
+    "author": "Sean Rafferty <srafferty89@gmail.com>",
+    "name": "nodeAPI",
+    "version": "1.0.0",
+    "description": "Test Node API tool",
+    "main": "server.js",
+    "license": "ISC",
+    "scripts": {
+        "start": "node server.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "dependencies": {
+        "body-parser": "^1.18.3",
+        "express": "^4.16.4"
+    }
+}

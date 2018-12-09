@@ -47,6 +47,7 @@ class UptimerConsole
             _Timer = null;
             //Start a timer to ping the application URL
             _Timer = new Timer(async (s)=> await PingUrl(s), _autoEvent, 10000, Convert.ToInt32(_Frequency));
+            GC.KeepAlive(_Timer);
         }
         catch(System.OutOfMemoryException e)
         {

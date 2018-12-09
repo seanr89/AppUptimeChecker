@@ -76,7 +76,7 @@ public class APIClient
     /// <param name="response">The log response object to be sent</param>
     public async Task SaveResponse(LogResponse response)
     {
-        Console.WriteLine($"SaveResponse at {response.EventDate.ToLongTimeString()}");
+        //Console.WriteLine($"SaveResponse at {response.EventDate.ToLongTimeString()}");
         try
         {
             if(_IsActive == false)
