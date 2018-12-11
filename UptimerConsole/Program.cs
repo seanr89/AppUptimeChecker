@@ -23,12 +23,12 @@ class UptimerConsole
     static void Main(string[] args)
     {
         //initialise parameters with defaults
-        _Url = "https://www.bbc.co.uk/";
+        _Url = "https://www.google.com";
         _Frequency = "30000";
 
         if(args.Any())
         {
-            _Url = args[0] ?? "https://www.bbc.co.uk/";
+            _Url = args[0] ?? "https://www.google.com";
             _Frequency = args[1] ?? "30000";
         }
 
@@ -47,7 +47,7 @@ class UptimerConsole
             _Timer = null;
             //Start a timer to ping the application URL
             _Timer = new Timer(async (s)=> await PingUrl(s), _autoEvent, 10000, Convert.ToInt32(_Frequency));
-            GC.KeepAlive(_Timer);
+            //GC.KeepAlive(_Timer);
         }
         catch(System.OutOfMemoryException e)
         {
@@ -61,8 +61,8 @@ class UptimerConsole
             Environment.Exit(0);
             AppDomain.CurrentDomain.ProcessExit += (sender, eventArgs) => Console.WriteLine("proc exit");
         }
+        Console.WriteLine($"Application Complete!");
         Console.ReadLine();
-        //Console.WriteLine($"Application Complete!");
     }
 
     /// <summary>
@@ -85,8 +85,9 @@ class UptimerConsole
         response = null;
         watch.Stop();
         watch = null;
+        GC.KeepAlive(_Timer);
         // Force a garbage collection to occur for this demo.
-        GC.Collect();
+        //GC.Collect();
     }
 
     /// <summary>

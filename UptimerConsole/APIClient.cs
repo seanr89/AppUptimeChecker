@@ -64,10 +64,6 @@ public class APIClient
         {
             Console.WriteLine($"TestClient HttpRequestException Caught {hre.Message}");
         }
-        // catch(Exception e)
-        // {
-        //     Console.WriteLine($"TestClient Exception Caught {e.Message}");
-        // }
     }
 
     /// <summary>
