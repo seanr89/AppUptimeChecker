@@ -12,11 +12,23 @@ public class TimerService : IHostedService, IDisposable
     private Timer _Timer;
     private APIClient _ApiClient;
     private string _Url;
+    private int _Frequency;
     private readonly HttpClient _Client;
 
     public TimerService()
     {
         _Url = "https://www.google.com";
+        _Frequency = 30000;
+        _ApiClient = new APIClient("https://siteuptimeapi.azurewebsites.net", _Url);
+        _ApiClient.InitialiseURLToAPI();
+
+        _Client = new HttpClient();
+    }
+
+    public TimerService(TimerSettings settings)
+    {
+        _Url = settings.URL;
+        _Frequency = settings.Frequency;
         _ApiClient = new APIClient("https://siteuptimeapi.azurewebsites.net", _Url);
         _ApiClient.InitialiseURLToAPI();
 
@@ -26,8 +38,8 @@ public class TimerService : IHostedService, IDisposable
     public Task StartAsync(CancellationToken cancellationToken)
     {
         Console.WriteLine($"StartAsync");
-        _Timer = new Timer(async (s)=> await PingUrl(s), null, 10000, 
-            30000);
+        _Timer = new Timer(async (s)=> await PingUrl(s), null, 5000, 
+            _Frequency);
             
         return Task.CompletedTask;
     }
@@ -39,16 +51,7 @@ public class TimerService : IHostedService, IDisposable
         return Task.CompletedTask;
     }
 
-    // /// <summary>
-    // /// 
-    // /// </summary>
-    // /// <param name="state"></param>
-    // private void DoWork(object state)
-    // {
-    //     Console.WriteLine("Timed Background Service is working.");
-    // }
-
-        /// <summary>
+    /// <summary>
     /// Method handle the pinging of the url, handling of message response
     /// and the saving of the response
     /// </summary>
@@ -56,7 +59,7 @@ public class TimerService : IHostedService, IDisposable
     /// <returns></returns>
     private async Task PingUrl(object state)
     {
-        Console.WriteLine($"PingUrl with current time {DateTime.Now.ToLongTimeString()}");
+        //Console.WriteLine($"PingUrl with current time {DateTime.Now.ToLongTimeString()}");
         var watch = Stopwatch.StartNew();
         var response = await GetResponse();
         if (response != null)
