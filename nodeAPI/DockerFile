@@ -1,0 +1,13 @@
+
+# Node v10
+FROM node:10
+
+# Use this directory to store files, run npm, and launch our application:
+WORKDIR /app
+COPY package.json /app
+RUN npm install
+COPY . /app
+# What we want to do is to run our application
+CMD node server.js
+# Expose port 8081 to the outside once the container has launched
+EXPOSE 8081

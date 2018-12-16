@@ -21,7 +21,6 @@ public class TimerService : IHostedService, IDisposable
     //     _Frequency = 30000;
     //     _ApiClient = new APIClient("https://siteuptimeapi.azurewebsites.net", _Url);
     //     _ApiClient.InitialiseURLToAPI();
-
     //     _Client = new HttpClient();
     // }
 
