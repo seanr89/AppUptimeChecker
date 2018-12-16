@@ -12,12 +12,12 @@ public class TimerService : IHostedService, IDisposable
     private Timer _Timer;
     private APIClient _ApiClient;
     private string _Url;
-    private string _Frequency;
     private readonly HttpClient _Client;
 
     public TimerService()
     {
-        _ApiClient = new APIClient("https://siteuptimeapi.azurewebsites.net", "https://www.google.com");
+        _Url = "https://www.google.com";
+        _ApiClient = new APIClient("https://siteuptimeapi.azurewebsites.net", _Url);
         _ApiClient.InitialiseURLToAPI();
 
         _Client = new HttpClient();
@@ -25,7 +25,8 @@ public class TimerService : IHostedService, IDisposable
 
     public Task StartAsync(CancellationToken cancellationToken)
     {
-        _Timer = new Timer(DoWork, null, 10000, 
+        Console.WriteLine($"StartAsync");
+        _Timer = new Timer(async (s)=> await PingUrl(s), null, 10000, 
             30000);
             
         return Task.CompletedTask;
@@ -38,14 +39,14 @@ public class TimerService : IHostedService, IDisposable
         return Task.CompletedTask;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="state"></param>
-    private void DoWork(object state)
-    {
-        Console.WriteLine("Timed Background Service is working.");
-    }
+    // /// <summary>
+    // /// 
+    // /// </summary>
+    // /// <param name="state"></param>
+    // private void DoWork(object state)
+    // {
+    //     Console.WriteLine("Timed Background Service is working.");
+    // }
 
         /// <summary>
     /// Method handle the pinging of the url, handling of message response
@@ -55,7 +56,7 @@ public class TimerService : IHostedService, IDisposable
     /// <returns></returns>
     private async Task PingUrl(object state)
     {
-        //Console.WriteLine($"PingUrl with current time {DateTime.Now.ToLongTimeString()}");
+        Console.WriteLine($"PingUrl with current time {DateTime.Now.ToLongTimeString()}");
         var watch = Stopwatch.StartNew();
         var response = await GetResponse();
         if (response != null)
