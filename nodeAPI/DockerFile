@@ -9,5 +9,5 @@ RUN npm install
 COPY . /app
 # What we want to do is to run our application
 CMD node server.js
-# Expose port 8081 to the outside once the container has launched
-EXPOSE 8081
+# Expose port 8000 to the outside once the container has launched
+EXPOSE 8000
