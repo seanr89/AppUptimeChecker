@@ -14,6 +14,8 @@ app.use(bodyParser.json());
 //initialise the port to use!
 const port = 8000;
 
+require('./routes/note_Routes')(app);
+
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
