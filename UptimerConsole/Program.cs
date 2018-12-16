@@ -17,7 +17,6 @@ class UptimerConsole
 {
     private static string _Url;
     private static int _Frequency;
-    private TimerService _TimerService;
     
     public static async Task Main(string[] args)
     {

@@ -15,16 +15,20 @@ public class TimerService : IHostedService, IDisposable
     private int _Frequency;
     private readonly HttpClient _Client;
 
-    public TimerService()
-    {
-        _Url = "https://www.google.com";
-        _Frequency = 30000;
-        _ApiClient = new APIClient("https://siteuptimeapi.azurewebsites.net", _Url);
-        _ApiClient.InitialiseURLToAPI();
+    // public TimerService()
+    // {
+    //     _Url = "https://www.google.com";
+    //     _Frequency = 30000;
+    //     _ApiClient = new APIClient("https://siteuptimeapi.azurewebsites.net", _Url);
+    //     _ApiClient.InitialiseURLToAPI();
 
-        _Client = new HttpClient();
-    }
+    //     _Client = new HttpClient();
+    // }
 
+    /// <summary>
+    /// Constructor with timer settings injected
+    /// </summary>
+    /// <param name="settings">settings class providing parameters for URL and time frequency</param>
     public TimerService(TimerSettings settings)
     {
         _Url = settings.URL;
@@ -38,9 +42,22 @@ public class TimerService : IHostedService, IDisposable
     public Task StartAsync(CancellationToken cancellationToken)
     {
         Console.WriteLine($"StartAsync");
-        _Timer = new Timer(async (s)=> await PingUrl(s), null, 5000, 
+        try{
+            _Timer = new Timer(async (s)=> await PingUrl(s), null, 5000, 
             _Frequency);
-            
+        }
+        catch(System.OutOfMemoryException e)
+        {
+            Console.WriteLine($"Application Timer has had a memory issue : {e.Message}");
+            Environment.Exit(0);
+            //AppDomain.CurrentDomain.ProcessExit += (sender, eventArgs) => Console.WriteLine("proc exit");
+        }
+        catch(System.Threading.Tasks.TaskCanceledException et)
+        {
+            Console.WriteLine($"Application Timer has cancelled for exception : {et.Message}");
+            Environment.Exit(0);
+            //AppDomain.CurrentDomain.ProcessExit += (sender, eventArgs) => Console.WriteLine("proc exit");
+        }      
         return Task.CompletedTask;
     }
 
@@ -67,12 +84,11 @@ public class TimerService : IHostedService, IDisposable
             LogResponse logResponse = CreateLogResponse(response.StatusCode, (int)watch.ElapsedMilliseconds, response);
             await _ApiClient.SaveResponse(logResponse);
         }
-        GC.KeepAlive(_Timer);
         // Force a garbage collection to occur for this demo.
-        //GC.Collect();
+        GC.KeepAlive(_Timer);
     }
 
-        /// <summary>
+    /// <summary>
     /// ASYNC Request the response from the provided URL on startup
     /// </summary>
     /// <returns>HttpResponseMessage if return accepted</returns>
@@ -90,7 +106,7 @@ public class TimerService : IHostedService, IDisposable
         }
     }
 
-        /// <summary>
+    /// <summary>
     /// Method operation to handle the creation of a log response for saving to the API
     /// </summary>
     /// <param name="responseCode"></param>
