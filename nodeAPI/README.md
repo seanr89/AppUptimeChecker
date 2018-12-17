@@ -9,3 +9,18 @@ TODO
     - add nodejs container
     - add nginx container
 5. 
+
+## RUN APPLICATION ##
+
+- Command to execute
+$ node server.js
+# visit http://localhost:3000, and you will see a message 'Hello World'
+
+- Or else use the npm script commands
+# Run script declared by "start"
+$ npm start
+$ npm run start
+ 
+# Run script declared by "test"
+$ npm test
+$ npm run test
