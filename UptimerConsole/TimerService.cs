@@ -15,15 +15,6 @@ public class TimerService : IHostedService, IDisposable
     private int _Frequency;
     private readonly HttpClient _Client;
 
-    // public TimerService()
-    // {
-    //     _Url = "https://www.google.com";
-    //     _Frequency = 30000;
-    //     _ApiClient = new APIClient("https://siteuptimeapi.azurewebsites.net", _Url);
-    //     _ApiClient.InitialiseURLToAPI();
-    //     _Client = new HttpClient();
-    // }
-
     /// <summary>
     /// Constructor with timer settings injected
     /// </summary>
