@@ -15,6 +15,7 @@ app.use(bodyParser.json());
 const port = 8000;
 
 require('./routes/note_routes')(app);
+require('./routes/url_routes')(app);
 
 app.get('/', (req, res) => {
     res.send('Hello World!');

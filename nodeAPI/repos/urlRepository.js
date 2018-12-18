@@ -18,6 +18,20 @@ class URLRepository {
     getAll() {
         return Array.from(this.urls.values());
     }
+    remove() {
+        const keys = Array.from(this.urls.keys());
+        this.urls.delete(keys[keys.length - 1]);
+    }
+    save(url) {
+        if (this.getById(url.id) !== undefined) {
+            this.urls[url.id] = url;
+            return 'Updated Url with id=' + url.id;
+        }
+        else {
+            this.urls.set(url.id, url);
+            return 'Added Url with id=' + url.id;
+        }
+    }
 }
 
 const urlRepository = new URLRepository();

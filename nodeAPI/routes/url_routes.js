@@ -17,6 +17,17 @@ const getURLRoutes = (app) => {
         const result = repo.getAll();
         res.send(result);
     })
+    .get('/remove', (req, res) => {
+        repo.remove();
+        const result = 'Last note remove. Total count: '
+            + repo.urls.size;
+        res.send(result);
+    })
+    .post('/save', (req, res) => {
+        const url = req.body;
+        const result = repo.save(url);
+        res.send(result);
+    });
 
     app.use('/url', router);
 };
