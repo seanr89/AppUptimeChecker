@@ -29,15 +29,15 @@ class NoteRepository {
     save(note) {
         if (this.getById(note.id) !== undefined) {
             this.notes[note.id] = note;
-            return "Updated Note with id=" + note.id;
+            return 'Updated Note with id=' + note.id;
         }
         else {
             this.notes.set(note.id, note);
-            return "Added Note with id=" + note.id;
+            return 'Added Note with id=' + note.id;
         }
     }
 }
 
-const personRepository = new NoteRepository();
+const noteRepository = new NoteRepository();
  
 module.exports = noteRepository;
