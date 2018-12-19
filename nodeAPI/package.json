@@ -12,9 +12,10 @@
     },
     "dependencies": {
         "body-parser": "^1.18.3",
-        "express": "^4.16.4"
+        "express": "^4.16.4",
+        "tedious": "^3.0.1"
     },
-    "devDependencies" :{
+    "devDependencies": {
         "eslint": "^5.10.0"
     }
 }
