@@ -14,7 +14,11 @@ var Connection = require('tedious').Connection;
 
 
     var connection = new Connection(config);  
-    connection.on('connect', function(err) {  
+    connection.on('connect', function(err) { 
+        if (err) {  
+            console.log(err); 
+            return;
+        } 
         // If no error, then good to proceed.  
         console.log('Connected');  
         executeStatement();  
@@ -24,7 +28,8 @@ var Connection = require('tedious').Connection;
     //var TYPES = require('tedious').TYPES; 
 
     function executeStatement() {  
-        let request = new Request("SELECT c.CustomerID, c.CompanyName,COUNT(soh.SalesOrderID) AS OrderCount FROM SalesLT.Customer AS c LEFT OUTER JOIN SalesLT.SalesOrderHeader AS soh ON c.CustomerID = soh.CustomerID GROUP BY c.CustomerID, c.CompanyName ORDER BY OrderCount DESC;", function(err) {  
+        let request = new Request('SELECT c.CustomerID, c.CompanyName,COUNT(soh.SalesOrderID) AS OrderCount FROM SalesLT.Customer AS c LEFT OUTER JOIN SalesLT.SalesOrderHeader AS soh ON c.CustomerID = soh.CustomerID GROUP BY c.CustomerID, c.CompanyName ORDER BY OrderCount DESC;'
+            , function(err) {  
             if (err) {  
                 console.log(err);}  
             }); 
