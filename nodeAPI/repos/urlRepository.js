@@ -2,6 +2,8 @@
 'use strict';
 
 const URL = require('../models/url');
+//used by the sql to create the config
+var config = require('Config');
 
 class URLRepository {
     constructor() {
