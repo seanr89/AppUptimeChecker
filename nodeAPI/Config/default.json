@@ -1,8 +1,8 @@
 {
     "connection":{
-        "server"  : "<<server name or ip>>",
-        "userName": "<<user name>>",
-        "password": "<<password>>",
-        "options": { "encrypt": true, "database": "<<database name>>" }
+        "server"  : "uptimeserver.database.windows.net",
+        "userName": "UptimeAdmin",
+        "password": "5R7onnie",
+        "options": { "encrypt": true, "database": "UptimeDB" }
     }
 }
