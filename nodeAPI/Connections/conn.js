@@ -3,6 +3,7 @@
 var config = require('config');
 var Connection = require('tedious').Connection;  
 let simpleCon = null;
+const Request = require('tedious').Request;  
 
 class Conn
 {
@@ -23,8 +24,20 @@ class Conn
         });  
     }
 
-    executeStatement() {
-        
+    executeStatement(statement) {
+        let request = new Request(statement
+        , function(err) {  
+        if (err) {  
+            console.log(err);}  
+        }); 
+
+        request.on('done', function(rowCount, more) {  
+            if(more !== null)
+            {
+                console.log(rowCount + ' rows returned');
+            }
+        });  
+        simpleCon.execSql(request); 
     }
 }
 
