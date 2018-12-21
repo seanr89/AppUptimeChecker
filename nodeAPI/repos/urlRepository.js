@@ -3,7 +3,8 @@
 
 const URL = require('../models/url');
 //used by the sql to create the config
-var config = require('Config');
+const config = require('Config');
+const connection = require('../Connections/sqlConnection');
 
 class URLRepository {
     constructor() {
@@ -12,6 +13,8 @@ class URLRepository {
             [2, new URL(1, 'https://www.google.com', 67)],
             [3, new URL(1, 'https://www.google.com', 33)],
         ]);
+    
+        
     }
 
     getById(id) {
