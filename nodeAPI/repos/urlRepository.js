@@ -16,7 +16,12 @@ class URLRepository {
     }
 
     getById(id) {
-        connection.executeStatement();
+        try {
+            connection.executeStatement();
+        } catch (error) {
+            console.log('error with sql Execution');
+        }
+        
         return this.urls.get(id);
     }
     getAll() {

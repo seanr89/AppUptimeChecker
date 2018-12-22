@@ -9,11 +9,17 @@ class Conn
 {
     constructor() {
         simpleCon = new Connection(config.get('connection'));  
+
+        simpleCon.on('error', function(err) {
+            console.error(err.stack); }
+        );
         this.openConnection();
     }
 
+
     openConnection()
     {
+        console.log('openConnection');
         simpleCon.on('connect', function(err) { 
             if (err) {  
                 console.log(err); 
@@ -25,8 +31,7 @@ class Conn
     }
 
     executeStatement(statement) {
-        let request = new Request(statement
-        , function(err) {  
+        let request = new Request(statement, function(err) {  
         if (err) {  
             console.log(err);}  
         }); 
