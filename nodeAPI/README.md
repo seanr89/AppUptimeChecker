@@ -1,14 +1,16 @@
-Example NodeJS API application
+Example NodeJS API application use to act as a VM hosted API for accessing URL data
 
-TODO
+Plan of Action
 1. Create a DockerFile
     - Complete
 2. Implement data repository with example data
+    - Sample Complete
 3. Include SQLServer Access
+    - 50%
+    - Tedious NPM added for SQLServer access
 4. Create DockerCompose file
     - add nodejs container
     - add nginx container
-5. 
 
 ## RUN APPLICATION ##
 

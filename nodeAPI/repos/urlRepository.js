@@ -4,7 +4,7 @@
 const URL = require('../models/url');
 //used by the sql to create the config
 //const config = require('Config');
-const connection = require('../Connections/sqlConnection');
+const connection = require('../Connections/conn');
 
 class URLRepository {
     constructor() {
@@ -25,6 +25,12 @@ class URLRepository {
         return this.urls.get(id);
     }
     getAll() {
+        console.log('url getAll');
+        try {
+            connection.executeStatement();
+        } catch (error) {
+            console.log('error with sql Execution');
+        }
         return Array.from(this.urls.values());
     }
     remove() {

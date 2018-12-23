@@ -1,6 +1,7 @@
 'use strict';
 
-var config = require('config');
+const config = require('../Config/default.json');
+const defaultConfig = config.connection;
 var Connection = require('tedious').Connection;  
 let simpleCon = null;
 const Request = require('tedious').Request;  
@@ -8,7 +9,8 @@ const Request = require('tedious').Request;
 class Conn
 {
     constructor() {
-        simpleCon = new Connection(config.get('connection'));  
+        console.log('Connection Open');
+        simpleCon = new Connection(defaultConfig);
 
         simpleCon.on('error', function(err) {
             console.error(err.stack); }
@@ -31,6 +33,11 @@ class Conn
     }
 
     executeStatement(statement) {
+        if(statement === null)
+        {
+            console.log('no statement');
+            return;
+        }
         let request = new Request(statement, function(err) {  
         if (err) {  
             console.log(err);}  
