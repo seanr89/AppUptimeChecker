@@ -33,10 +33,14 @@ docker run -t -d seanraff89/uptimerconsole //live with -i -t for local test
 docker run -t -d --restart=always seanraff89/uptimerconsole
 #live
 docker run -i -d --restart=always seanraff89/uptimerconsole
-#TODO -addition of restart along with memory allocation to be included
-#Memory allocation is not current available 
-
 # -t stops the container from closing in the background
+#TODO -addition of restart along with memory allocation to be included
+#Memory allocation is not current available on sample VM
+
+# New revisions
+docker run -i -d --name uptimer2 seanraff89/uptimerconsole "https://bbc.co.uk/" "15000"
+
+
 
 # stop a container 
 docker rm -f <containerID>

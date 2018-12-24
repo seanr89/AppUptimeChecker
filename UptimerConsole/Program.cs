@@ -28,14 +28,14 @@ class UptimerConsole
         {
             int freq = 30000;
             _Url = args[0] ?? "https://www.google.com";
+            Console.WriteLine($"URL is {_Url}");
             
             if(int.TryParse(args[1], out freq))
             {
                 _Frequency = freq;
+                Console.WriteLine($"Frequency is is {_Frequency}");
             }
         }
-
-        //TODO - add/inject parameters into timer service!
         var hostBuilder = new HostBuilder()
              // Add configuration, logging, ...
             .ConfigureServices((hostContext, services) =>
