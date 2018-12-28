@@ -27,7 +27,7 @@ class URLRepository {
     getAll() {
         console.log('url getAll');
         try {
-            connection.executeStatement();
+            connection.executeStatement('SELECT TOP (10) [ID],[URL_ID],[ResponseCode][Duration],[EventDate]FROM [dbo].[Uptime]order by id desc');
         } catch (error) {
             console.log('error with sql Execution');
         }

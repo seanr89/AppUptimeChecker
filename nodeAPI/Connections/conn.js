@@ -9,13 +9,14 @@ const Request = require('tedious').Request;
 class Conn
 {
     constructor() {
-        console.log('Connection Open');
+        //console.log('Connection Open');
         simpleCon = new Connection(defaultConfig);
 
         simpleCon.on('error', function(err) {
             console.error(err.stack); }
         );
-        this.openConnection();
+        simpleCon.on('errorMessage', this.infoError);
+        //this.openConnection();
     }
 
 
@@ -33,24 +34,33 @@ class Conn
     }
 
     executeStatement(statement) {
+        this.openConnection();
+        console.log('executeStatement');
         if(statement === null)
         {
             console.log('no statement');
             return;
         }
-        let request = new Request(statement, function(err) {  
+        let request = new Request(statement, function(err, rowCount) {  
         if (err) {  
-            console.log(err);}  
+            console.log(err);
+        } 
+        console.log(rowCount + ' rows returned');
         }); 
 
-        request.on('done', function(rowCount, more) {  
-            if(more !== null)
-            {
-                console.log(rowCount + ' rows returned');
-            }
-        });  
+        // request.on('done', function(rowCount, more) {  
+        //     console.log('sql done!');
+        //     if(more !== null)
+        //     {
+        //         console.log(rowCount + ' rows returned');
+        //     }
+        // }); 
         simpleCon.execSql(request); 
     }
+ 
+    infoError(info) {
+        console.log(info.number + ' : ' + info.message);
+      }
 }
 
 const conn = new Conn();

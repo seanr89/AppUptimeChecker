@@ -40,10 +40,10 @@ docker run -i -d --restart=always seanraff89/uptimerconsole
 # New revisions
 docker run -i -d --name uptimer2 seanraff89/uptimerconsole "https://bbc.co.uk/" "15000"
 
-
-
 # stop a container 
-docker rm -f <containerID>
+docker rm -f <containerID> 
+# or
+docker rm -f <dockername>
 
 # Contribute
 TODO: Explain how other users and developers can contribute to make your code better. 
