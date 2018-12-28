@@ -48,6 +48,14 @@ class Conn
         console.log(rowCount + ' rows returned');
         }); 
 
+        request.on('requestCompleted', function () {
+            
+         });
+
+        request.on('done', function (rowCount, more, rows) {
+            
+        });
+
         // request.on('done', function(rowCount, more) {  
         //     console.log('sql done!');
         //     if(more !== null)
