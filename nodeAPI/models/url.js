@@ -2,10 +2,9 @@
 'use strict';
 
 class URL {
-    constructor(id, url, responseCode) {
+    constructor(id, url) {
         this.id = id;
         this.url = url;
-        this.responseCode = responseCode;
     }
 }
  

@@ -33,7 +33,7 @@ class Conn
         });  
     }
 
-    executeStatement(statement) {
+    executeStatement(statement, callback) {
         this.openConnection();
         console.log('executeStatement');
         if(statement === null)
@@ -41,20 +41,22 @@ class Conn
             console.log('no statement');
             return;
         }
-        let request = new Request(statement, function(err, rowCount) {  
-        if (err) {  
-            console.log(err);
-        } 
-        console.log(rowCount + ' rows returned');
+        let request = new Request(statement, function(err, rowCount, rows) {  
+            if (err) {  
+                console.log(err);
+            } 
+            console.log(rowCount + ' rows returned');
+            return rows;
+            //this.readRows(rows, rowCount);
         }); 
 
         request.on('requestCompleted', function () {
-            
+            console.log('requestCompleted');
          });
 
-        request.on('done', function (rowCount, more, rows) {
+        // request.on('done', function (rowCount, more, rows) {
             
-        });
+        // });
 
         // request.on('done', function(rowCount, more) {  
         //     console.log('sql done!');
@@ -69,6 +71,17 @@ class Conn
     infoError(info) {
         console.log(info.number + ' : ' + info.message);
       }
+    
+    readRows(rows, rowCount)
+    {
+        console.log('readRows');
+        //Now parse the data from each of the row and populate the array. 
+        // for(var i=0; i < rowCount; i++)
+        // {
+        //     console.log('row info included : ' + rows[i]);
+        //     let singleRowData = rows[i]; 
+        // }
+    }
 }
 
 const conn = new Conn();

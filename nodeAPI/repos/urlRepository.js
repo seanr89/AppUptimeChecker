@@ -5,13 +5,15 @@ const URL = require('../models/url');
 //used by the sql to create the config
 //const config = require('Config');
 const connection = require('../Connections/conn');
+let parser = require('../Parsers/URLParser');
 
 class URLRepository {
     constructor() {
+        //parser = new URLParser();
         this.urls = new Map([
-            [1, new URL(1, 'https://www.google.com', 100)],
-            [2, new URL(1, 'https://www.google.com', 67)],
-            [3, new URL(1, 'https://www.google.com', 33)],
+            [1, new URL(1, 'https://www.google.com')],
+            [2, new URL(1, 'https://www.google.com')],
+            [3, new URL(1, 'https://www.google.com')],
         ]);
     }
 
@@ -27,11 +29,13 @@ class URLRepository {
     getAll() {
         console.log('url getAll');
         try {
-            connection.executeStatement('SELECT TOP (10) [ID],[URL_ID],[ResponseCode][Duration],[EventDate]FROM [dbo].[Uptime]order by id desc');
+            connection.executeStatement('SELECT * FROM [dbo].[URL]');
+            
+            //return parser.parseSQLRowsToURLs(rows);
         } catch (error) {
             console.log('error with sql Execution');
         }
-        return Array.from(this.urls.values());
+        //return Array.from(this.urls.values());
     }
     remove() {
         const keys = Array.from(this.urls.keys());
