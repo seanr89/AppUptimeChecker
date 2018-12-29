@@ -14,8 +14,11 @@ const getURLRoutes = (app) => {
         res.send(result);
     })
     .get('/all', (req, res) => {
-        const result = repo.getAll();
-        res.send(result);
+        repo.getAll(function(data)
+        {
+            res.send(data);
+        });
+        
     })
     .get('/remove', (req, res) => {
         repo.remove();

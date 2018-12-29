@@ -26,13 +26,19 @@ class URLRepository {
         
         return this.urls.get(id);
     }
-    getAll() {
+
+    /**
+     * 
+     * @param {*} callback 
+     */
+    getAll(callback) {
         console.log('url getAll');
         try {
             connection.executeStatement('SELECT * FROM [dbo].[URL]', function(err, rowCount, rows){
                 if(err !== null)
                 {        
-                    return Array.from(parser.parseSQLRowsToURLs(rows, rowCount));
+                    var data = parser.parseSQLRowsToURLs(rows, rowCount)
+                    callback(data);
                 }
             }); 
         } catch (error) {
