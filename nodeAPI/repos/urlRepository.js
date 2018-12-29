@@ -29,9 +29,12 @@ class URLRepository {
     getAll() {
         console.log('url getAll');
         try {
-            connection.executeStatement('SELECT * FROM [dbo].[URL]');
-            
-            //return parser.parseSQLRowsToURLs(rows);
+            connection.executeStatement('SELECT * FROM [dbo].[URL]', function(err, rowCount, rows){
+                if(err !== null)
+                {        
+                    return Array.from(parser.parseSQLRowsToURLs(rows, rowCount));
+                }
+            }); 
         } catch (error) {
             console.log('error with sql Execution');
         }

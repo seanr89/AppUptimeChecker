@@ -14,20 +14,25 @@ class URLParser {
         console.log('parseSQLRowDataSetToURL');
         if(row === null)
             return;
-        let obj = new URL();
-            obj.id = row[0].value;
-            obj.url = row[1].value;
-
+        let obj = new URL(row[0].value, row[1].value);
         return obj;
     }
 
-    parseSQLRowsToURLs(rows)
+    /**
+     * 
+     * @param {Array} rows 
+     * @param {Number} rowCount 
+     */
+    parseSQLRowsToURLs(rows, rowCount)
     {
         console.log('parseSQLRowsToURLs');
         if(rows === null)
+        { 
+            console.log('rows are null');
             return;
+        }
         var urlArray = [];
-        for(var i=0; i < rows; i++)
+        for(var i=0; i < rowCount; i++)
         {
             let url = this.parseSQLRowDataSetToURL(rows[i]);
             if(url !== null)

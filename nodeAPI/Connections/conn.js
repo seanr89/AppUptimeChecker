@@ -33,6 +33,11 @@ class Conn
         });  
     }
 
+    /**
+     * 
+     * @param {*} statement 
+     * @param {Function} callback (err, rowCount, rows)
+     */
     executeStatement(statement, callback) {
         this.openConnection();
         console.log('executeStatement');
@@ -46,7 +51,8 @@ class Conn
                 console.log(err);
             } 
             console.log(rowCount + ' rows returned');
-            return rows;
+            //return rows;
+            callback(err, rowCount, rows);
             //this.readRows(rows, rowCount);
         }); 
 
@@ -71,17 +77,6 @@ class Conn
     infoError(info) {
         console.log(info.number + ' : ' + info.message);
       }
-    
-    readRows(rows, rowCount)
-    {
-        console.log('readRows');
-        //Now parse the data from each of the row and populate the array. 
-        // for(var i=0; i < rowCount; i++)
-        // {
-        //     console.log('row info included : ' + rows[i]);
-        //     let singleRowData = rows[i]; 
-        // }
-    }
 }
 
 const conn = new Conn();
