@@ -14,6 +14,7 @@ const getURLRoutes = (app) => {
         res.send(result);
     })
     .get('/all', (req, res) => {
+        //Repo request with callback required!
         repo.getAll(function(data)
         {
             res.send(data);
@@ -22,7 +23,7 @@ const getURLRoutes = (app) => {
     })
     .get('/remove', (req, res) => {
         repo.remove();
-        const result = 'Last note remove. Total count: '
+        const result = 'Last url removed. Total count: '
             + repo.urls.size;
         res.send(result);
     })

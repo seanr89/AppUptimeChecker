@@ -17,19 +17,26 @@ class URLRepository {
         ]);
     }
 
-    getById(id) {
-        try {
-            connection.executeStatement();
-        } catch (error) {
-            console.log('error with sql Execution');
-        }
-        
-        return this.urls.get(id);
+    /**
+     * 
+     * @param {number} id 
+     * @param {Function(Error, number, any[])} callback 
+     */
+    getById(id, callback) {
+        connection.executeStatement(`SELECT * FROM [dbo].[URL] WHERE ID = ${id}`, function(err, rowCount, rows){
+            if(err !== null)
+            {
+                console.log(err);
+            }
+            else{
+                callback(err, rowCount, rows);
+            }
+        });
     }
 
     /**
      * 
-     * @param {*} callback 
+     * @param {Function(Array)} callback(data) with data being the responding data
      */
     getAll(callback) {
         console.log('url getAll');
@@ -46,11 +53,22 @@ class URLRepository {
         }
         //return Array.from(this.urls.values());
     }
-    remove() {
+
+    /**
+     * 
+     * @param {*} callback 
+     */
+    remove(callback) {
         const keys = Array.from(this.urls.keys());
         this.urls.delete(keys[keys.length - 1]);
     }
-    save(url) {
+
+    /**
+     * 
+     * @param {*} url 
+     * @param {*} callback 
+     */
+    save(url, callback) {
         if (this.getById(url.id) !== undefined) {
             this.urls[url.id] = url;
             return 'Updated Url with id=' + url.id;

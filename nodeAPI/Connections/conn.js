@@ -36,7 +36,7 @@ class Conn
     /**
      * 
      * @param {*} statement 
-     * @param {Function} callback (err, rowCount, rows)
+     * @param {Function(Error, number, any[])} callback (err, rowCount, rows)
      */
     executeStatement(statement, callback) {
         this.openConnection();
@@ -59,18 +59,6 @@ class Conn
         request.on('requestCompleted', function () {
             console.log('requestCompleted');
          });
-
-        // request.on('done', function (rowCount, more, rows) {
-            
-        // });
-
-        // request.on('done', function(rowCount, more) {  
-        //     console.log('sql done!');
-        //     if(more !== null)
-        //     {
-        //         console.log(rowCount + ' rows returned');
-        //     }
-        // }); 
         simpleCon.execSql(request); 
     }
  
