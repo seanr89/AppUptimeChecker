@@ -18,6 +18,7 @@ const port = 8000;
 //Middleware routing system!!
 require('./routes/note_routes')(app); // handles /note
 require('./routes/url_routes')(app); // handles /url
+require('./routes/uptime_routes')(app); // handles /uptime
 
 // (req, res) is a callback function - called in another function
 app.get('/', (req, res) => {

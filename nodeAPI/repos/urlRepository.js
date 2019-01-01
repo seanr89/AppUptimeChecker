@@ -61,6 +61,7 @@ class URLRepository {
     remove(callback) {
         const keys = Array.from(this.urls.keys());
         this.urls.delete(keys[keys.length - 1]);
+        callback();
     }
 
     /**
@@ -71,12 +72,13 @@ class URLRepository {
     save(url, callback) {
         if (this.getById(url.id) !== undefined) {
             this.urls[url.id] = url;
-            return 'Updated Url with id=' + url.id;
+            //return 'Updated Url with id=' + url.id;
         }
         else {
             this.urls.set(url.id, url);
-            return 'Added Url with id=' + url.id;
+            //return 'Added Url with id=' + url.id;
         }
+        callback();
     }
 }
 

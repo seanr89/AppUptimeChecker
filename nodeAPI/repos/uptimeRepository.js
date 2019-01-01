@@ -4,6 +4,7 @@
 const Uptime = require('../models/uptime');
 //Tedious SQL Server connection
 const connection = require('../Connections/conn');
+let parser = require('../Parsers/UptimeParser');
 
 class UptimeRepository {
     constructor() {
@@ -14,7 +15,7 @@ class UptimeRepository {
 
     /**
      * request all Uptime records from the database
-     * @param {Function(Error, number, any[])} callback : returning method on response
+     * @param {Function(any[])} callback : returning method on response
      */
     getAll(callback)
     {
@@ -25,15 +26,16 @@ class UptimeRepository {
                 console.log(err);
             }
             else{
-                callback(err, rowCount, rows);
+                var data = parser.parseSQLRowsToURLs(rows, rowCount)
+                callback(data);
             }
         });
     }
 
     /**
      * 
-     * @param {number} id 
-     * @param {Function(Error, number, any[])} callback : returning method on response
+     * @param {number} id : the id of the URL
+     * @param {Function(any[])} callback : returning method on response
      */
     getUptimeByURLID(id, callback)
     {
@@ -44,7 +46,8 @@ class UptimeRepository {
                 console.log(err);
             }
             else{
-                callback(err, rowCount, rows);
+                var data = parser.parseSQLRowsToURLs(rows, rowCount)
+                callback(data);
             }
         });
     }
