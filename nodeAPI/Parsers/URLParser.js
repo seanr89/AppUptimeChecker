@@ -11,7 +11,7 @@ class URLParser {
 
     parseSQLRowDataSetToURL(row)
     {
-        console.log('parseSQLRowDataSetToURL');
+        //console.log('parseSQLRowDataSetToURL');
         if(row === null)
             return;
         let obj = new URL(row[0].value, row[1].value);
@@ -19,15 +19,15 @@ class URLParser {
     }
 
     /**
-     * 
-     * @param {Array} rows 
-     * @param {Number} rowCount 
+     *
+     * @param {Array} rows
+     * @param {Number} rowCount
      */
     parseSQLRowsToURLs(rows, rowCount)
     {
-        console.log('parseSQLRowsToURLs');
+        //console.log('parseSQLRowsToURLs');
         if(rows === null)
-        { 
+        {
             console.log('rows are null');
             return;
         }

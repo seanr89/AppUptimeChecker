@@ -20,20 +20,17 @@ class UptimeRepository {
     getAll(callback)
     {
         console.log('uptime:getAll');
-        connection.executeStatement('SELECT * FROM [dbo].[Uptime]', function(err, rowCount, rows){
-            if(err !== null)
+        connection.executeStatement('SELECT TOP (100) * FROM [dbo].[Uptime] ORDER BY ID DESC', function(err, rowCount, rows){
+            if(err !== null || err === undefined)
             {
-                console.log(err);
-            }
-            else{
-                var data = parser.parseSQLRowsToURLs(rows, rowCount)
+                var data = parser.parseSQLRowsToRecords(rows, rowCount)
                 callback(data);
             }
         });
     }
 
     /**
-     * 
+     *
      * @param {number} id : the id of the URL
      * @param {Function(any[])} callback : returning method on response
      */
@@ -46,7 +43,7 @@ class UptimeRepository {
                 console.log(err);
             }
             else{
-                var data = parser.parseSQLRowsToURLs(rows, rowCount)
+                var data = parser.parseSQLRowsToRecords(rows, rowCount)
                 callback(data);
             }
         });
@@ -54,5 +51,5 @@ class UptimeRepository {
 }
 
 const uptimeRepository = new UptimeRepository();
- 
+
 module.exports = uptimeRepository;

@@ -18,9 +18,9 @@ class URLRepository {
     }
 
     /**
-     * 
-     * @param {number} id 
-     * @param {Function(Error, number, any[])} callback 
+     *
+     * @param {number} id
+     * @param {Function(Error, number, any[])} callback
      */
     getById(id, callback) {
         connection.executeStatement(`SELECT * FROM [dbo].[URL] WHERE ID = ${id}`, function(err, rowCount, rows){
@@ -35,28 +35,27 @@ class URLRepository {
     }
 
     /**
-     * 
+     *
      * @param {Function(Array)} callback(data) with data being the responding data
      */
     getAll(callback) {
         console.log('url getAll');
         try {
             connection.executeStatement('SELECT * FROM [dbo].[URL]', function(err, rowCount, rows){
-                if(err !== null)
-                {        
+                if(err !== null || err === undefined)
+                {
                     var data = parser.parseSQLRowsToURLs(rows, rowCount)
                     callback(data);
                 }
-            }); 
+            });
         } catch (error) {
             console.log('error with sql Execution');
         }
-        //return Array.from(this.urls.values());
     }
 
     /**
-     * 
-     * @param {*} callback 
+     *
+     * @param {*} callback
      */
     remove(callback) {
         const keys = Array.from(this.urls.keys());
@@ -65,9 +64,9 @@ class URLRepository {
     }
 
     /**
-     * 
-     * @param {*} url 
-     * @param {*} callback 
+     *
+     * @param {*} url
+     * @param {*} callback
      */
     save(url, callback) {
         if (this.getById(url.id) !== undefined) {
@@ -83,5 +82,5 @@ class URLRepository {
 }
 
 const urlRepository = new URLRepository();
- 
+
 module.exports = urlRepository;

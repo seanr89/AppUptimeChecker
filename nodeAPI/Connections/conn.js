@@ -2,9 +2,9 @@
 
 const config = require('../Config/default.json');
 const defaultConfig = config.connection;
-var Connection = require('tedious').Connection;  
+var Connection = require('tedious').Connection;
 let simpleCon = null;
-const Request = require('tedious').Request;  
+const Request = require('tedious').Request;
 
 class Conn
 {
@@ -22,20 +22,20 @@ class Conn
 
     openConnection()
     {
-        console.log('openConnection');
-        simpleCon.on('connect', function(err) { 
-            if (err) {  
-                console.log(err); 
+        //console.log('openConnection');
+        simpleCon.on('connect', function(err) {
+            if (err) {
+                console.log(err);
                 return;
-            } 
-            // If no error, then good to proceed.  
-            console.log('Connected');  
-        });  
+            }
+            // If no error, then good to proceed.
+            console.log('Connected');
+        });
     }
 
     /**
-     * 
-     * @param {*} statement 
+     *
+     * @param {*} statement
      * @param {Function(Error, number, any[])} callback (err, rowCount, rows)
      */
     executeStatement(statement, callback) {
@@ -46,27 +46,25 @@ class Conn
             console.log('no statement');
             return;
         }
-        let request = new Request(statement, function(err, rowCount, rows) {  
-            if (err) {  
+        let request = new Request(statement, function(err, rowCount, rows) {
+            if (err) {
                 console.log(err);
-            } 
-            console.log(rowCount + ' rows returned');
-            //return rows;
+            }
+            //console.log(rowCount + ' rows returned');
             callback(err, rowCount, rows);
-            //this.readRows(rows, rowCount);
-        }); 
+        });
 
         request.on('requestCompleted', function () {
             console.log('requestCompleted');
          });
-        simpleCon.execSql(request); 
+        simpleCon.execSql(request);
     }
- 
+
     infoError(info) {
         console.log(info.number + ' : ' + info.message);
       }
 }
 
 const conn = new Conn();
- 
+
 module.exports = conn;

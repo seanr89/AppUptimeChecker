@@ -20,15 +20,15 @@ class UptimeParser {
     }
 
     /**
-     * 
-     * @param {Array} rows 
-     * @param {Number} rowCount 
+     *
+     * @param {Array} rows
+     * @param {Number} rowCount
      */
-    parseSQLRowsToRecord(rows, rowCount)
+    parseSQLRowsToRecords(rows, rowCount)
     {
-        console.log('parseSQLRowsToRecord');
+        console.log('parseSQLRowsToRecords');
         if(rows === null)
-        { 
+        {
             console.log('rows are null');
             return;
         }

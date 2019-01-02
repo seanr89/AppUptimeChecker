@@ -12,17 +12,24 @@ Plan of Action
     - add nodejs container
     - add nginx container
 
-## RUN APPLICATION ##
+#How to run the Application
 
 - Command to execute
 $ node server.js
-# visit http://localhost:3000, and you will see a message 'Hello World'
+## visit http://localhost:3000, and you will see a message 'Hello World'
 
 - Or else use the npm script commands
-# Run script declared by "start"
+## Run script declared by "start"
 $ npm start
 $ npm run start
- 
-# Run script declared by "test"
+
+## Run script declared by "test"
 $ npm test
 $ npm run test
+
+#Packages
+
+| Command | Description |
+| --- | --- |
+| git status | List all new or modified files |
+| git diff | Show file differences that haven't been staged |
