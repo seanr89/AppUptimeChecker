@@ -11,6 +11,7 @@
     },
     "rules": {
       "quotes": [2, "single"],
-      "no-console": 0
+      "no-console": 0,
+      "impliedStrict": true
     }
   }
