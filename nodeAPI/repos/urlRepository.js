@@ -24,19 +24,19 @@ class URLRepository {
      */
     getById(id, callback) {
         connection.executeStatement(`SELECT * FROM [dbo].[URL] WHERE ID = ${id}`, function(err, rowCount, rows){
-            if(err !== null)
-            {
-                console.log(err);
-            }
-            else{
-                callback(err, rowCount, rows);
-            }
+          if(err !== null || err === undefined)
+          {
+              var data = parser.parseSQLRowsToRecords(rows, rowCount)
+              callback(err,data);
+          }
+          else
+            callback(err, null);
         });
     }
 
     /**
      *
-     * @param {Function(Array)} callback(data) with data being the responding data
+     * @param {Function(Error, any[])} callback(data) with data being the responding data
      */
     getAll(callback) {
         console.log('url getAll');
@@ -44,9 +44,11 @@ class URLRepository {
             connection.executeStatement('SELECT * FROM [dbo].[URL]', function(err, rowCount, rows){
                 if(err !== null || err === undefined)
                 {
-                    var data = parser.parseSQLRowsToURLs(rows, rowCount)
-                    callback(data);
+                    var data = parser.parseSQLRowsToRecords(rows, rowCount)
+                    callback(err,data);
                 }
+                else
+                  callback(err, null);
             });
         } catch (error) {
             console.log('error with sql Execution');

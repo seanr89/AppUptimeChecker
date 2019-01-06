@@ -2,14 +2,15 @@
 'use strict';
 
 // './BaseParser';
+const URL = require('../models/url');
 
 class URLParser {
     constructor()
     {
-        console.log('URLParser');
+        //console.log('URLParser');
     }
 
-    parseSQLRowDataSetToURL(row)
+    parseSQLRowDataSetToRecord(row)
     {
         //console.log('parseSQLRowDataSetToURL');
         if(row === null)
@@ -23,7 +24,7 @@ class URLParser {
      * @param {Array} rows
      * @param {Number} rowCount
      */
-    parseSQLRowsToURLs(rows, rowCount)
+    parseSQLRowsToRecords(rows, rowCount)
     {
         //console.log('parseSQLRowsToURLs');
         if(rows === null)
@@ -34,7 +35,7 @@ class URLParser {
         var urlArray = [];
         for(var i=0; i < rowCount; i++)
         {
-            let url = this.parseSQLRowDataSetToURL(rows[i]);
+            let url = this.parseSQLRowDataSetToRecord(rows[i]);
             if(url !== null)
                 urlArray.push(url);
         }
