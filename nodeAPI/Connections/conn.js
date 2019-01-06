@@ -13,10 +13,10 @@ class Conn
         simpleCon = new Connection(defaultConfig);
 
         simpleCon.on('error', function(err) {
-            console.error(err.stack); }
-        );
+            console.error(err.stack);
+            this.closeConnection();
+          });
         simpleCon.on('errorMessage', this.infoError);
-        //this.openConnection();
     }
 
 
@@ -34,13 +34,21 @@ class Conn
     }
 
     /**
+     * ensure we close the currently open connection
+     */
+    closeConnection()
+    {
+      simpleCon.close();
+    }
+
+    /**
      *
      * @param {*} statement
      * @param {Function(Error, number, any[])} callback (err, rowCount, rows)
      */
     executeStatement(statement, callback) {
-        this.openConnection();
         console.log('executeStatement');
+        this.openConnection();
         if(statement === null)
         {
             console.log('no statement');
@@ -54,8 +62,11 @@ class Conn
             callback(err, rowCount, rows);
         });
 
+        // useful event listener to check when a query is complete
         request.on('requestCompleted', function () {
             console.log('requestCompleted');
+            //do we need to close the connection here??
+            this.closeConnection();
          });
         simpleCon.execSql(request);
     }
