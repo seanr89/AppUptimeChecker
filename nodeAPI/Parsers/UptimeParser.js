@@ -3,6 +3,8 @@
 
 // './BaseParser';
 const Uptime = require('../models/uptime');
+const SqlParam = require('../Connections/sqlParam');
+var TYPES = require('tedious').TYPES;
 
 class UptimeParser {
     constructor()
@@ -40,6 +42,16 @@ class UptimeParser {
             array.push(url);
         }
         return array;
+    }
+
+    createSqlParamsForObject(uptime)
+    {
+        var result = [];
+        result.push(new SqlParam('urlID', TYPES.Int, uptime.urlID));
+        result.push(new SqlParam('responseCode', TYPES.Int, uptime.urlID));
+        result.push(new SqlParam('duration', TYPES.Int, uptime.urlID));
+
+        return result;
     }
 }
 

@@ -5,6 +5,7 @@ const defaultConfig = config.connection;
 var Connection = require('tedious').Connection;
 let simpleCon = null;
 const Request = require('tedious').Request;
+var TYPES = require('tedious').TYPES;
 
 class Conn
 {
@@ -49,11 +50,6 @@ class Conn
     executeStatement(statement, callback) {
         console.log('executeStatement');
         this.openConnection();
-        if(statement === null)
-        {
-            console.log('no statement');
-            return;
-        }
         let request = new Request(statement, function(err, rowCount, rows) {
             if (err) {
                 console.log(err);
@@ -69,6 +65,44 @@ class Conn
             this.closeConnection();
          });
         simpleCon.execSql(request);
+    }
+
+    /**
+     *
+     * @param {*} statement
+     * @param {*} parameters
+     * @param {*} callback
+     */
+    executeParameterizedStatementAndReturnID(statement, parameters, callback)
+    {
+      console.log('executeStatement');
+      if(statement === null || parameters === null){
+        console.log('no statement or parameters'); return;
+      }
+      this.openConnection();
+
+      let request = new Request(statement, function(err) {
+        if (err) {
+            console.log(err);
+            callback(err, null);
+        }
+        for(var i = 0; i < parameters.length; ++i){
+          request.addParameter(parameters[i].name, parameters[i].type, parameters[i].value);
+        }
+
+        request.on('row', function(columns) {
+          columns.forEach(function(column) {
+              if (column.value === null) {
+                console.log('NULL');
+                callback('Failed to insert', -1);
+              } else {
+                //console.log('id of inserted item is ' + column.value);
+                callback(null, column.value);
+              }
+            });
+          });
+      simpleCon.execSql(request);
+      });
     }
 
     infoError(info) {
