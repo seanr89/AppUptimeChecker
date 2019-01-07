@@ -44,13 +44,17 @@ class UptimeParser {
         return array;
     }
 
+    /**
+     *
+     * @param {*} uptime
+     * @returns {SqlParam} : SqlParam with detailed records
+     */
     createSqlParamsForObject(uptime)
     {
         var result = [];
-        result.push(new SqlParam('urlID', TYPES.Int, uptime.urlID));
-        result.push(new SqlParam('responseCode', TYPES.Int, uptime.urlID));
-        result.push(new SqlParam('duration', TYPES.Int, uptime.urlID));
-
+        result.push(new SqlParam('URLID', TYPES.Int, uptime.urlID));
+        result.push(new SqlParam('ResponseCode', TYPES.Int, uptime.responseCode));
+        result.push(new SqlParam('Duration', TYPES.Int, uptime.duration));
         return result;
     }
 }
